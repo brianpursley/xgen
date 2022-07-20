@@ -11,7 +11,7 @@
 //        -i <path> Input file path or directory for the XML schema definition
 //        -o <path> Output file path or directory for the generated code
 //        -p        Specify the package name
-//        -l        Specify the language of generated code (Go/C/Java/Rust/TypeScript)
+//        -l        Specify the language of generated code (Go/C/CSharp/Java/Rust/TypeScript)
 //        -h        Output this help and exit
 //        -v        Output version and exit
 //
@@ -53,6 +53,7 @@ var Cfg = Config{
 var SupportLang = map[string]bool{
 	"Go":         true,
 	"C":          true,
+	"CSharp":     true,
 	"Java":       true,
 	"Rust":       true,
 	"TypeScript": true,
@@ -68,7 +69,7 @@ func parseFlags() *Config {
 	helpPtr := flag.Bool("h", false, "Show this help and exit")
 	flag.Parse()
 	if *helpPtr {
-		fmt.Printf("xgen version: %s\r\nCopyright (c) 2020 - 2021 Ri Xu https://xuri.me All rights reserved.\r\n\r\nUsage:\r\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\r\n  -o <path>\tOutput file path or directory for the generated code\r\n  -p     \tSpecify the package name\r\n  -l      \tSpecify the language of generated code (Go/C/Java/Rust/TypeScript)\r\n  -h     \tOutput this help and exit\r\n  -v     \tOutput version and exit\r\n", Cfg.Version)
+		fmt.Printf("xgen version: %s\r\nCopyright (c) 2020 - 2021 Ri Xu https://xuri.me All rights reserved.\r\n\r\nUsage:\r\n$ xgen [<flag> ...] <XSD file or directory> ...\n  -i <path>\tInput file path or directory for the XML schema definition\r\n  -o <path>\tOutput file path or directory for the generated code\r\n  -p     \tSpecify the package name\r\n  -l      \tSpecify the language of generated code (Go/C/CSharp/Java/Rust/TypeScript)\r\n  -h     \tOutput this help and exit\r\n  -v     \tOutput version and exit\r\n", Cfg.Version)
 		os.Exit(0)
 	}
 	if *verPtr {
@@ -81,7 +82,7 @@ func parseFlags() *Config {
 	}
 	Cfg.I = *iPtr
 	if *langPtr == "" {
-		fmt.Println("must specify the language of generated code (Go/C/Java/Rust/TypeScript)")
+		fmt.Println("must specify the language of generated code (Go/C/CSharp/Java/Rust/TypeScript)")
 		os.Exit(1)
 	}
 	Cfg.Lang = *langPtr

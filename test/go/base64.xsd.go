@@ -37,6 +37,7 @@ type MyType5 string
 // MyType6 ...
 type MyType6 struct {
 	CodeAttr       string `xml:"code,attr,omitempty"`
+	AnotherAttr    string `xml:"another,attr,omitempty"`
 	IdentifierAttr int    `xml:"identifier,attr,omitempty"`
 }
 

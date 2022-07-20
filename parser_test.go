@@ -91,12 +91,14 @@ func testParseForSource(t *testing.T, lang string, fileExt string, langDirName s
 
 				actualGenerated, err := ioutil.ReadFile(actualFilename)
 				assert.NoError(t, err)
+				actualGeneratedString := string(actualGenerated)
+				//actualGeneratedString := strings.ReplaceAll(string(actualGenerated), "\r\n", "\n")
 
 				expectedFilename := filepath.Join(codeDir, generatedFileName)
 				expectedGenerated, err := ioutil.ReadFile(expectedFilename)
 				assert.NoError(t, err)
 
-				assert.Equal(t, string(expectedGenerated), string(actualGenerated), fmt.Sprintf("error in generated code for %s", file))
+				assert.Equal(t, string(expectedGenerated), actualGeneratedString, fmt.Sprintf("error in generated code for %s", file))
 			})
 		}
 	}
@@ -133,3 +135,11 @@ func TestParseRust(t *testing.T) {
 func TestParseRustExternal(t *testing.T) {
 	testParseForSource(t, "Rust", "rs", "rs", externalFixtureDir, true)
 }
+
+//func TestParseCSharp(t *testing.T) {
+//	testParseForSource(t, "CSharp", "cs", "cs", testFixtureDir, false)
+//}
+//
+//func TestParseCSharpExternal(t *testing.T) {
+//	testParseForSource(t, "CSharp", "cs", "cs", externalFixtureDir, true)
+//}

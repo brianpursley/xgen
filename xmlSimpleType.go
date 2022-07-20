@@ -35,6 +35,11 @@ func (opt *Options) EndSimpleType(ele xml.EndElement, protoTree []interface{}) (
 		opt.Attribute.Peek().(*Attribute).Type = opt.SimpleType.Pop().(*SimpleType).Base
 		return
 	}
+	if opt.SimpleType.Len() > 0 && opt.Element.Len() > 0 {
+		opt.Element.Peek().(*Element).Type = opt.SimpleType.Pop().(*SimpleType).Base
+		return
+	}
+
 	if ele.Name.Local == opt.CurrentEle && opt.ComplexType.Len() == 1 {
 		opt.ProtoTree = append(opt.ProtoTree, opt.ComplexType.Pop())
 		opt.CurrentEle = ""

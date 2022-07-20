@@ -56,6 +56,8 @@ public class MyType5 {
 public class MyType6 {
 	@XmlAttribute(name = "code")
 	protected String CodeAttr;
+	@XmlAttribute(name = "another")
+	protected String AnotherAttr;
 	@XmlAttribute(name = "identifier")
 	protected Integer IdentifierAttr;
 }

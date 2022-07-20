@@ -66,8 +66,15 @@ func PrepareOutputDir(path string) error {
 	}
 	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		if err := os.MkdirAll(path, 0755); err != nil {
-			return err
+		dir := path
+		if filepath.Ext(dir) != "" {
+
+		}
+		_, err := os.Stat(path)
+		if os.IsNotExist(err) {
+			if err := os.MkdirAll(path, 0755); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
@@ -77,55 +84,55 @@ func PrepareOutputDir(path string) error {
 // Rust languages and data types in XSD.
 // https://www.w3.org/TR/xmlschema-2/#datatype
 var BuildInTypes = map[string][]string{
-	"anyType":            {"string", "string", "char", "String", "String"},
-	"ENTITIES":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>"},
-	"ENTITY":             {"string", "string", "char", "String", "String"},
-	"ID":                 {"string", "string", "char", "String", "String"},
-	"IDREF":              {"string", "string", "char", "String", "String"},
-	"IDREFS":             {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>"},
-	"NCName":             {"string", "string", "char", "String", "String"},
-	"NMTOKEN":            {"string", "string", "char", "String", "String"},
-	"NMTOKENS":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>"},
-	"NOTATION":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>"},
-	"Name":               {"string", "string", "char", "String", "String"},
-	"QName":              {"xml.Name", "any", "char", "String", "String"},
-	"anyURI":             {"string", "string", "char", "QName", "String"},
-	"base64Binary":       {"[]byte", "Uint8Array", "char[]", "List<Byte>", "String"},
-	"boolean":            {"bool", "boolean", "bool", "Boolean", "bool"},
-	"byte":               {"byte", "any", "char[]", "Byte", "u8"},
-	"date":               {"string", "string", "char", "String", "u8"},
-	"dateTime":           {"string", "string", "char", "String", "u8"},
-	"decimal":            {"float64", "number", "float", "Float", "f64"},
-	"double":             {"float64", "number", "float", "Float", "f64"},
-	"duration":           {"string", "string", "char", "String", "String"},
-	"float":              {"float32", "number", "float", "Float", "f64"},
-	"gDay":               {"string", "string", "char", "String", "String"},
-	"gMonth":             {"string", "string", "char", "String", "String"},
-	"gMonthDay":          {"string", "string", "char", "String", "String"},
-	"gYear":              {"string", "string", "char", "String", "String"},
-	"gYearMonth":         {"string", "string", "char", "String", "String"},
-	"hexBinary":          {"[]byte", "Uint8Array", "char[]", "List<Byte>", "String"},
-	"int":                {"int", "number", "int", "Integer", "i32"},
-	"integer":            {"int", "number", "int", "Integer", "i32"},
-	"language":           {"string", "string", "char", "String", "String"},
-	"long":               {"int64", "number", "int", "Long", "i64"},
-	"negativeInteger":    {"int", "number", "int", "Integer", "i32"},
-	"nonNegativeInteger": {"int", "number", "int", "Integer", "u32"},
-	"normalizedString":   {"string", "string", "char", "String", "String"},
-	"nonPositiveInteger": {"int", "number", "int", "Integer", "i32"},
-	"positiveInteger":    {"int", "number", "int", "Integer", "u32"},
-	"short":              {"int16", "number", "int", "Integer", "i16"},
-	"string":             {"string", "string", "char", "String", "String"},
-	"time":               {"time.Time", "string", "char", "String", "String"},
-	"token":              {"string", "string", "char", "String", "String"},
-	"unsignedByte":       {"byte", "any", "char", "Byte", "u8"},
-	"unsignedInt":        {"uint32", "number", "unsigned int", "Integer", "u32"},
-	"unsignedLong":       {"uint64", "number", "unsigned int", "Long", "u64"},
-	"unsignedShort":      {"uint16", "number", "unsigned int", "Short", "u16"},
-	"xml:lang":           {"string", "string", "char", "String", "String"},
-	"xml:space":          {"string", "string", "char", "String", "String"},
-	"xml:base":           {"string", "string", "char", "String", "String"},
-	"xml:id":             {"string", "string", "char", "String", "String"},
+	"anyType":            {"string", "string", "char", "String", "String", "string"},
+	"ENTITIES":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>", "List<string>"},
+	"ENTITY":             {"string", "string", "char", "String", "String", "string"},
+	"ID":                 {"string", "string", "char", "String", "String", "string"},
+	"IDREF":              {"string", "string", "char", "String", "String", "string"},
+	"IDREFS":             {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>", "List<string>"},
+	"NCName":             {"string", "string", "char", "String", "String", "string"},
+	"NMTOKEN":            {"string", "string", "char", "String", "String", "string"},
+	"NMTOKENS":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>", "List<string>"},
+	"NOTATION":           {"[]string", "Array<string>", "char[]", "List<String>", "Vec<String>", "List<string>"},
+	"Name":               {"string", "string", "char", "String", "String", "string"},
+	"QName":              {"xml.Name", "any", "char", "String", "String", "string"},
+	"anyURI":             {"string", "string", "char", "QName", "String", "string"},
+	"base64Binary":       {"[]byte", "Uint8Array", "char[]", "List<Byte>", "String", "byte[]"},
+	"boolean":            {"bool", "boolean", "bool", "Boolean", "bool", "bool"},
+	"byte":               {"byte", "any", "char[]", "Byte", "u8", "byte"},
+	"date":               {"string", "string", "char", "String", "u8", "DateOnly"},
+	"dateTime":           {"string", "string", "char", "String", "u8", "DateTime"},
+	"decimal":            {"float64", "number", "float", "Float", "f64", "decimal"},
+	"double":             {"float64", "number", "float", "Float", "f64", "double"},
+	"duration":           {"string", "string", "char", "String", "String", "string"},
+	"float":              {"float32", "number", "float", "Float", "f64", "float"},
+	"gDay":               {"string", "string", "char", "String", "String", "string"},
+	"gMonth":             {"string", "string", "char", "String", "String", "string"},
+	"gMonthDay":          {"string", "string", "char", "String", "String", "string"},
+	"gYear":              {"string", "string", "char", "String", "String", "string"},
+	"gYearMonth":         {"string", "string", "char", "String", "String", "string"},
+	"hexBinary":          {"[]byte", "Uint8Array", "char[]", "List<Byte>", "String", "byte[]"},
+	"int":                {"int", "number", "int", "Integer", "i32", "int"},
+	"integer":            {"int", "number", "int", "Integer", "i32", "int"},
+	"language":           {"string", "string", "char", "String", "String", "string"},
+	"long":               {"int64", "number", "int", "Long", "i64", "long"},
+	"negativeInteger":    {"int", "number", "int", "Integer", "i32", "int"},
+	"nonNegativeInteger": {"int", "number", "int", "Integer", "u32", "uint"},
+	"normalizedString":   {"string", "string", "char", "String", "String", "string"},
+	"nonPositiveInteger": {"int", "number", "int", "Integer", "i32", "int"},
+	"positiveInteger":    {"int", "number", "int", "Integer", "u32", "uint"},
+	"short":              {"int16", "number", "int", "Integer", "i16", "short"},
+	"string":             {"string", "string", "char", "String", "String", "string"},
+	"time":               {"time.Time", "string", "char", "String", "String", "TimeOnly"},
+	"token":              {"string", "string", "char", "String", "String", "string"},
+	"unsignedByte":       {"byte", "any", "char", "Byte", "u8", "byte"},
+	"unsignedInt":        {"uint32", "number", "unsigned int", "Integer", "u32", "uint"},
+	"unsignedLong":       {"uint64", "number", "unsigned int", "Long", "u64", "ulong"},
+	"unsignedShort":      {"uint16", "number", "unsigned int", "Short", "u16", "ushort"},
+	"xml:lang":           {"string", "string", "char", "String", "String", "string"},
+	"xml:space":          {"string", "string", "char", "String", "String", "string"},
+	"xml:base":           {"string", "string", "char", "String", "String", "string"},
+	"xml:id":             {"string", "string", "char", "String", "String", "string"},
 }
 
 func getBuildInTypeByLang(value, lang string) (buildType string, ok bool) {
@@ -135,6 +142,7 @@ func getBuildInTypeByLang(value, lang string) (buildType string, ok bool) {
 		"C":          2,
 		"Java":       3,
 		"Rust":       4,
+		"CSharp":     5,
 	}
 	var buildInTypes []string
 	if buildInTypes, ok = BuildInTypes[value]; !ok {
@@ -255,11 +263,11 @@ func fetchSchema(URL string) ([]byte, error) {
 }
 
 func genFieldComment(name, doc, prefix string) string {
-	docReplacer := strings.NewReplacer("\n", fmt.Sprintf("\r\n%s ", prefix), "\t", "")
+	docReplacer := strings.NewReplacer("\n", fmt.Sprintf("\n%s ", prefix), "\t", "")
 	if doc == "" {
-		return fmt.Sprintf("\r\n%s %s ...\r\n", prefix, name)
+		return fmt.Sprintf("\n%s %s ...\n", prefix, name)
 	}
-	return fmt.Sprintf("\r\n%s %s is %s\r\n", prefix, name, docReplacer.Replace(doc))
+	return fmt.Sprintf("\n%s %s is %s\n", prefix, name, docReplacer.Replace(doc))
 }
 
 type kvPair struct {

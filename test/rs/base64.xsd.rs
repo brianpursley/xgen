@@ -61,6 +61,8 @@ pub struct MyType5 {
 pub struct MyType6 {
 	#[serde(rename = "code")]
 	pub code: Option<String>,
+	#[serde(rename = "another")]
+	pub another: Option<String>,
 	#[serde(rename = "identifier")]
 	pub identifier: Option<i32>,
 }

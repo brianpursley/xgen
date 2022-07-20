@@ -26,6 +26,7 @@ typedef char MyType5;
 // MyType6 ...
 typedef struct {
 	char CodeAttr; // attr, optional
+	char AnotherAttr; // attr, optional
 	int IdentifierAttr; // attr, optional
 } MyType6;
 
